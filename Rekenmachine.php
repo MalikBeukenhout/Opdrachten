@@ -2,16 +2,19 @@
 // Simple Calculator
 echo "Simple Calculator\n";
 
-// Get user inputs
-$num1 = getNumber("Enter first number: ");
-$operation = getOperation("Enter operation (+, -, *, /): ");
-$num2 = getNumber("Enter second number: ");
+while (true) {
+    // Get user inputs
+    $num1 = getNumber("Enter first number: ");
+    $operation = getOperation("Enter operation (+, -, *, /): ");
+    $num2 = getNumber("Enter second number: ");
 
-// Perform operation
-$result = calculate($num1, $operation, $num2);
+    // Perform operation
+    $result = calculate($num1, $operation, $num2);
 
-// Display result
-echo "Result: $result\n";
+    // Display result
+    echo "Result: $result\n\n";
+
+}
 
 function getNumber($message){
     return (float)readline($message);
