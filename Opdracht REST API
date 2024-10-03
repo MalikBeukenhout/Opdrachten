@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roermond Marker</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Roermond</h1>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // API-aanroep naar Nominatim
+        fetch("https://nominatim.openstreetmap.org/search?format=json&q=Roermond")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Netwerk fout: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Controleer of er resultaten zijn
+                if (data.length > 0) {
+                    const location = data[0];
+                    const latitude = location.lat;
+                    const longitude = location.lon;
+
+                    // Maak een kaart
+                    const map = L.map('map').setView([latitude, longitude], 12);
+
+                    // Voeg een tile layer toe
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 19,
+                    }).addTo(map);
+
+                    // Voeg een marker toe
+                    L.marker([latitude, longitude]).addTo(map)
+                        .bindPopup('Roermond')
+                        .openPopup();
+                } else {
+                    console.log("Geen resultaten gevonden.");
+                }
+            })
+            .catch(error => {
+                console.error('Er was een probleem met de API-aanroep:', error);
+            });
+    </script>
+</body>
+</html>
